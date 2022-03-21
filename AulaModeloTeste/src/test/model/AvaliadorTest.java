@@ -1,6 +1,9 @@
 package test.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -94,4 +97,38 @@ public class AvaliadorTest {
 		double resultadoObtido = avaliador.getMenorLance();
 		assertEquals(resultadoEsperado, resultadoObtido, 0.0001);
 	}
+	
+	@Test
+	public void testarTresMaioresLancesOrdemCrescente() {		
+		leilao.propoe(new Lance(usuario1, 100.0));
+		leilao.propoe(new Lance(usuario2, 200.0));
+		leilao.propoe(new Lance(usuario1, 300.0));
+		leilao.propoe(new Lance(usuario2, 400.0));
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		List<Lance> maiores = leiloeiro.getTresMaiores();
+		assertEquals(3, maiores.size());
+		assertEquals(400, maiores.get(0).getValor(), 0.00001);
+		assertEquals(300, maiores.get(1).getValor(), 0.00001);
+		assertEquals(200, maiores.get(2).getValor(), 0.00001);
+	}
+	
+	@Test
+	public void testarTresMaioresLancesListaVazia() {
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		List<Lance> maiores = leiloeiro.getTresMaiores();
+		assertEquals(0, maiores.size());
+	}
+	
+	@Test
+	public void testarTresMaioresLancesListaComUm() {		
+		leilao.propoe(new Lance(usuario1, 100.0));
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		List<Lance> maiores = leiloeiro.getTresMaiores();
+		assertEquals(1, maiores.size());
+		assertEquals(100, maiores.get(0).getValor(), 0.00001);
+	}
+	
 }
