@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -104,9 +105,8 @@ public class AvaliadorTest {
 		leilao.propoe(new Lance(usuario2, 200.0));
 		leilao.propoe(new Lance(usuario1, 300.0));
 		leilao.propoe(new Lance(usuario2, 400.0));
-		Avaliador leiloeiro = new Avaliador();
-		leiloeiro.avalia(leilao);
-		List<Lance> maiores = leiloeiro.getTresMaiores();
+		avaliador.avalia(leilao);
+		List<Lance> maiores = avaliador.getTresMaiores();
 		assertEquals(3, maiores.size());
 		assertEquals(400, maiores.get(0).getValor(), 0.00001);
 		assertEquals(300, maiores.get(1).getValor(), 0.00001);
@@ -115,18 +115,14 @@ public class AvaliadorTest {
 	
 	@Test
 	public void testarTresMaioresLancesListaVazia() {
-		Avaliador leiloeiro = new Avaliador();
-		leiloeiro.avalia(leilao);
-		List<Lance> maiores = leiloeiro.getTresMaiores();
-		assertEquals(0, maiores.size());
+		Assertions.assertThrows(RuntimeException.class, ()->avaliador.avalia(leilao));
 	}
 	
 	@Test
 	public void testarTresMaioresLancesListaComUm() {		
 		leilao.propoe(new Lance(usuario1, 100.0));
-		Avaliador leiloeiro = new Avaliador();
-		leiloeiro.avalia(leilao);
-		List<Lance> maiores = leiloeiro.getTresMaiores();
+		avaliador.avalia(leilao);
+		List<Lance> maiores = avaliador.getTresMaiores();
 		assertEquals(1, maiores.size());
 		assertEquals(100, maiores.get(0).getValor(), 0.00001);
 	}

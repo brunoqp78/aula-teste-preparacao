@@ -8,10 +8,15 @@ import java.util.List;
 public class Avaliador {
 	private double maiorDeTodos = Double.NEGATIVE_INFINITY;
 	private double menorDeTodos = Double.POSITIVE_INFINITY;
-	
+
 	private List<Lance> maiores;
-	
-	public void avalia(Leilao leilao) {
+
+	public void avalia(Leilao leilao){
+		// lançando a exceção
+		if(leilao.getLances().size() ==0)
+			throw new RuntimeException(
+			"Não é possível avaliar um leilão sem lances"
+		);
 		for (Lance lance : leilao.getLances()) {
 			if (lance.getValor() > maiorDeTodos) {
 				maiorDeTodos = lance.getValor();
@@ -22,7 +27,7 @@ public class Avaliador {
 		}
 		pegaOsMaioresNo(leilao);
 	}
-	
+
 	private void pegaOsMaioresNo(Leilao leilao) {
 		maiores = new ArrayList<Lance>(leilao.getLances());
 		Collections.sort(maiores, new Comparator<Lance>() {
@@ -37,10 +42,15 @@ public class Avaliador {
 		maiores = maiores.subList(0, maiores.size() > 3 ? 3 : maiores.size());
 	}
 
-	public List<Lance> getTresMaiores() { return this.maiores;}
-	
+	public List<Lance> getTresMaiores() {
+		return this.maiores;
+	}
+
 	public double getMaiorLance() {
 		return maiorDeTodos;
 	}
-	public double getMenorLance() { return menorDeTodos; }
+
+	public double getMenorLance() {
+		return menorDeTodos;
+	}
 }
