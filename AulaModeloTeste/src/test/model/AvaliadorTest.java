@@ -52,4 +52,46 @@ public class AvaliadorTest {
 		double resultadoObtido = avaliador.getMaiorLance();
 		assertEquals(resultadoEsperado, resultadoObtido, 0.0001);
 	}
+	
+	@Test
+	public void testarMenorLancesOrdemCrescente() {
+		// cenário: 3 lances sem ordem
+		leilao.propoe(new Lance(usuario3,250.0));
+		leilao.propoe(new Lance(usuario1,300.0));
+		leilao.propoe(new Lance(usuario2,400.0));
+		double resultadoEsperado = 250;
+		// executando a ação
+		avaliador.avalia(leilao);
+		// comparando a saída com o esperado
+		double resultadoObtido = avaliador.getMenorLance();
+		assertEquals(resultadoEsperado, resultadoObtido, 0.0001);
+	}
+	
+	
+	
+	@Test
+	public void testarMenorLancesSemOrdem() {
+		// cenário: 3 lances sem ordem
+		leilao.propoe(new Lance(usuario1,300.0));
+		leilao.propoe(new Lance(usuario2,400.0));
+		leilao.propoe(new Lance(usuario3,250.0));
+		double resultadoEsperado = 250;
+		// executando a ação
+		avaliador.avalia(leilao);
+		// comparando a saída com o esperado
+		double resultadoObtido = avaliador.getMenorLance();
+		assertEquals(resultadoEsperado, resultadoObtido, 0.0001);
+	}
+	
+	@Test
+	public void testarMenorLancesUmLance() {
+		// cenário: 3 lances sem ordem
+		leilao.propoe(new Lance(usuario3,250.0));
+		double resultadoEsperado = 250;
+		// executando a ação
+		avaliador.avalia(leilao);
+		// comparando a saída com o esperado
+		double resultadoObtido = avaliador.getMenorLance();
+		assertEquals(resultadoEsperado, resultadoObtido, 0.0001);
+	}
 }
