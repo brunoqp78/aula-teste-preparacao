@@ -8,19 +8,18 @@ import java.util.List;
 public class Avaliador {
 	private double maiorDeTodos = Double.NEGATIVE_INFINITY;
 	private double menorDeTodos = Double.POSITIVE_INFINITY;
-
 	private List<Lance> maiores;
 
-	public void avalia(Leilao leilao){
-		// lançando a exceção
-		if(leilao.getLances().size() ==0)
-			throw new RuntimeException(
-			"Não é possível avaliar um leilão sem lances"
-		);
+	public void avalia(Leilao leilao) {
+		if (leilao.getLances().size()==0) {
+			throw new RuntimeException("Não é possível avaliar um leilão sem lances");
+		}
+		
 		for (Lance lance : leilao.getLances()) {
 			if (lance.getValor() > maiorDeTodos) {
 				maiorDeTodos = lance.getValor();
 			}
+
 			if (lance.getValor() < menorDeTodos) {
 				menorDeTodos = lance.getValor();
 			}
@@ -39,7 +38,8 @@ public class Avaliador {
 				return 0;
 			}
 		});
-		maiores = maiores.subList(0, maiores.size() > 3 ? 3 : maiores.size());
+		if (maiores.size()>=3)			
+			maiores = maiores.subList(0, 3);
 	}
 
 	public List<Lance> getTresMaiores() {
@@ -53,4 +53,5 @@ public class Avaliador {
 	public double getMenorLance() {
 		return menorDeTodos;
 	}
+
 }
